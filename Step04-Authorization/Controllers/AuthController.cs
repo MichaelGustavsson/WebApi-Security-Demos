@@ -55,15 +55,19 @@ namespace Step04_Authorization.ViewModels
         UserName = model.Email.ToLower()
       };
 
-      var claimRole = model.isAdmin ? new Claim("Role", "Admin") : new Claim("Role", "User");
-
-      var claimUser = new Claim("UserName", user.UserName);
-
       var result = await _userManager.CreateAsync(user, model.Password);
 
       if (result.Succeeded)
       {
-        await _userManager.AddClaimAsync(user, claimRole);
+        if (model.isAdmin)
+        {
+          await _userManager.AddClaimAsync(user, new Claim("Admin", "true"));
+        }
+
+        await _userManager.AddClaimAsync(user, new Claim("User", "true"));
+
+        var claimUser = new Claim("UserName", user.UserName);
+
         await _userManager.AddClaimAsync(user, claimUser);
 
         if (result.Succeeded)

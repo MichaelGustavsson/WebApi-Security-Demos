@@ -51,6 +51,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
   options.AddPolicy("Admins", policy => policy.RequireClaim("Admin"));
+  options.AddPolicy("Users", policy => policy.RequireClaim("User"));
 });
 
 builder.Services.AddControllers();

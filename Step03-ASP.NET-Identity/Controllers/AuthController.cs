@@ -55,7 +55,7 @@ namespace Step03_ASP.NET_Identity.ViewModels
         UserName = model.Email.ToLower()
       };
 
-      var claimRole = model.isAdmin ? new Claim("Role", "Admin") : new Claim("Role", "User");
+      var claimRole = model.isAdmin ? new Claim("Admin", "true") : new Claim("User", "true");
 
       var claimUser = new Claim("UserName", user.UserName);
 
